@@ -133,6 +133,15 @@ export default function Home() {
     isDarkMode ? root.classList.add('dark') : root.classList.remove('dark');
   }, [isDarkMode]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedLogin = localStorage.getItem('hrms_is_logged_in');
+      if (storedLogin === 'true') {
+        setIsLoggedIn(true);
+      }
+    }
+  }, []);
+
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
@@ -266,7 +275,7 @@ export default function Home() {
       {/* Logout */}
       <div className="border-t border-slate-100 dark:border-slate-800/60 p-3 shrink-0">
         <button
-          onClick={() => setIsLoggedIn(false)}
+          onClick={() => { setIsLoggedIn(false); if (typeof window !== 'undefined') localStorage.removeItem('hrms_is_logged_in'); }}
           className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
         >
           <LogOut className="h-4 w-4" />
@@ -279,7 +288,7 @@ export default function Home() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   if (!isLoggedIn) {
-    return <LoginView onLogin={() => setIsLoggedIn(true)} />;
+    return <LoginView onLogin={() => { setIsLoggedIn(true); if (typeof window !== 'undefined') localStorage.setItem('hrms_is_logged_in', 'true'); }} />;
   }
 
   return (
@@ -413,7 +422,7 @@ export default function Home() {
                           <item.icon className="h-4 w-4" />{item.label}
                         </button>
                       ))}
-                      <button onClick={() => setIsLoggedIn(false)} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/10 transition-colors mt-1">
+                      <button onClick={() => { setIsLoggedIn(false); if (typeof window !== 'undefined') localStorage.removeItem('hrms_is_logged_in'); }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/10 transition-colors mt-1">
                         <LogOut className="h-4 w-4" />Sign Out
                       </button>
                     </motion.div>
