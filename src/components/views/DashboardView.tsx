@@ -196,8 +196,7 @@ export default function DashboardView({
     { name: 'Personal Information', icon: User, view: 'personalInfo' },
     { name: 'Benefits', icon: Gift, view: 'compensation' },
     { name: 'IJP and Referrals', icon: Store, view: 'directory' },
-    { name: 'Roles and Delegations', icon: BadgeCheck, view: 'settings' },
-    { name: 'Roles and Delegations', icon: BadgeCheck, view: 'settings' },
+
     { name: 'AskHR', icon: HelpCircle, view: 'settings' },
     { name: 'Policy Handbook', icon: BookOpen, view: 'policies' },
     { name: 'Holiday List', icon: CalendarDays, view: 'holidays' },
