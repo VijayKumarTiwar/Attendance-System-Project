@@ -111,7 +111,6 @@ export default function AnalyticsView({ employees, attendanceLogs, leaveRequests
 
   const leaveBarOptions: any = {
     chart: { type: 'bar', toolbar: { show: false }, fontFamily: 'inherit', animations: { enabled: false } },
-    colors: ['#6366f1'],
     plotOptions: {
       bar: { borderRadius: 8, columnWidth: '50%', distributed: true },
     },
