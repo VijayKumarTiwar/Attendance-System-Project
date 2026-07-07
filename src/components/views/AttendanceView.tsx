@@ -57,14 +57,19 @@ export default function AttendanceView({ logs, employees, onAddPunch, setView }:
   useEffect(() => {
     let stream: MediaStream | null = null;
     if (isScanning) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then((s) => {
-          stream = s;
-          if (videoRef.current) {
-            videoRef.current.srcObject = s;
-          }
-        })
-        .catch(err => console.error("Camera access denied", err));
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then((s) => {
+            stream = s;
+            if (videoRef.current) {
+              videoRef.current.srcObject = s;
+            }
+          })
+          .catch(err => console.error("Camera access denied", err));
+      } else {
+        console.warn("Camera API not available. This usually requires an HTTPS connection or localhost.");
+        setScanMessage("Camera unavailable (Needs HTTPS)");
+      }
     }
     return () => {
       if (stream) {
